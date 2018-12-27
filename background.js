@@ -61,82 +61,54 @@ chrome.runtime.onMessage.addListener((message) => {
     }
   });
   // TODO #1: save preferences to storage/cache?
+  chrome.storage.local.set({ options: message }, () => {
+    console.log('Saved options');
+  });
 });
 
-const searchGoogle = function (highlighted) {
+const search = (highlighted, url) => {
   const search = highlighted.selectionText;
   chrome.tabs.create({
-    url: `https://www.google.com/search?q=${search}`,
+    url: `${url}${search}`,
   });
 };
-
-const searchMDN = function (highlighted) {
-  const search = highlighted.selectionText;
-  chrome.tabs.create({ url: `https://developer.mozilla.org/en-US/search?q=${search}` });
-};
-
-const searchOverflow = function (highlighted) {
-  const search = highlighted.selectionText;
-  chrome.tabs.create({ url: `https://stackoverflow.com/search?q=${search}` });
-};
-
-const searchWiki = function (highlighted) {
-  const search = highlighted.selectionText;
-  chrome.tabs.create({
-    url: `https://en.wikipedia.org/w/index.php?search=${search}`,
-  });
-};
-
-const searchAmazon = function (highlighted) {
-  const search = highlighted.selectionText;
-  chrome.tabs.create({
-    url: `https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=${search}`,
-  });
-};
-
-const searchUD = function (highlighted) {
-  const search = highlighted.selectionText;
-  chrome.tabs.create({
-    url: `https://www.urbandictionary.com/define.php?term=${search}`,
-  });
-};
-
-const searchYouTube = function (highlighted) {
-  const search = highlighted.selectionText;
-  chrome.tabs.create({
-    url: `https://www.youtube.com/results?search_query=${search}`,
-  });
-};
-
 
 chrome.contextMenus.onClicked.addListener((target) => {
+  const google = 'https://www.google.com/search?q=';
+  const mdn = 'https://developer.mozilla.org/en-US/search?q=';
+  const stackOverflow = 'https://stackoverflow.com/search?q=';
+  const wiki = 'https://en.wikipedia.org/w/index.php?search=';
+  const amazon = 'https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=';
+  const urbanDictionary = 'https://www.urbandictionary.com/define.php?term=';
+  const youTube = 'https://www.youtube.com/results?search_query=';
+
   switch (target.menuItemId) {
     case 'searchGoogle':
-      searchGoogle(target);
+      search(target, google);
       break;
 
     case 'searchMDN':
-      searchMDN(target);
+      search(target, mdn);
       break;
 
     case 'searchOverflow':
-      searchOverflow(target);
+      search(target, stackOverflow);
       break;
 
     case 'searchWiki':
-      searchWiki(target);
+      search(target, wiki);
       break;
 
     case 'searchAmazon':
-      searchAmazon(target);
+      search(target, amazon);
       break;
 
     case 'searchUrbanDictionary':
-      searchUD(target);
+      search(target, urbanDictionary);
       break;
 
     case 'searchYouTube':
-      searchYouTube(target);
+      search(target, youTube);
       break;
 
     default:

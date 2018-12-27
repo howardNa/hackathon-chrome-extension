@@ -4,7 +4,8 @@
   "description": "Highlight any text in your browser and quickly search popular websites!",
   "permissions": [
     "contextMenus",
-    "tabs"
+    "tabs",
+    "storage"
   ],
   "icons": {
     "128": "mamba512.png"
