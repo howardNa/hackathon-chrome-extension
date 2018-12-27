@@ -1,0 +1,21 @@
+{
+  "name": "Mamba Search",
+  "version": "1.0",
+  "description": "Highlight any text in your browser and quickly search popular websites!",
+  "permissions": [
+    "contextMenus",
+    "tabs"
+  ],
+  "icons": {
+    "128": "mamba512.png"
+  },
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["popup.js", "background.js"],
+    "persistent": false
+  },
+
+  "manifest_version": 2
+}
